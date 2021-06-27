@@ -28,22 +28,22 @@ class TopStoriesFragmentViewModel: ViewModel() {
 
     fun callApi(page:Int){
             when(page){
-                TabItemsModel.TOPSTORIES.id -> this.getTopHeadlines()
+                TabItemsModel.TOPSTORIES.id -> this.getTopHeadlines(TabItemsModel.TOPSTORIES.category)
 
-                TabItemsModel.SPORTS.id -> this.getSportsNews()
+                TabItemsModel.SPORTS.id -> this.getCategoryWiseNews(TabItemsModel.SPORTS.category)
 
-                TabItemsModel.BUSINESS.id -> this.getBusinessNews()
+                TabItemsModel.BUSINESS.id -> this.getCategoryWiseNews(TabItemsModel.BUSINESS.category)
 
-                TabItemsModel.SCIENCE.id -> this.getScienceNews()
+                TabItemsModel.SCIENCE.id -> this.getCategoryWiseNews(TabItemsModel.SCIENCE.category)
 
-                TabItemsModel.HEALTH.id -> this.getHealthNews()
+                TabItemsModel.HEALTH.id -> this.getCategoryWiseNews(TabItemsModel.HEALTH.category)
             }
 
     }
 
-    fun getTopHeadlines(){
+    private fun getTopHeadlines(category: String){
 
-        val call = Utilities.create().initWebServiceCall(BuildConfig.BASE_URL).getTopHeadlines("in")
+        val call = Utilities.create().initWebServiceCall(BuildConfig.BASE_URL).getTopHeadlines(category)
         call.enqueue(object : Callback<NewsResponseBean> {
             override fun onResponse(
                 call: Call<NewsResponseBean>,
@@ -59,63 +59,9 @@ class TopStoriesFragmentViewModel: ViewModel() {
         })
     }
 
-    fun getSportsNews(){
+    private fun getCategoryWiseNews(category:String){
 
-        val call = Utilities.create().initWebServiceCall(BuildConfig.BASE_URL).getNewsCategoryWise("sports")
-        call.enqueue(object : Callback<NewsResponseBean> {
-            override fun onResponse(
-                call: Call<NewsResponseBean>,
-                response: Response<NewsResponseBean>
-            ) {
-                addData(response.body()!!)
-            }
-
-            override fun onFailure(call: Call<NewsResponseBean>, t: Throwable) {
-
-            }
-
-        })
-    }
-
-    fun getBusinessNews(){
-
-        val call = Utilities.create().initWebServiceCall(BuildConfig.BASE_URL).getNewsCategoryWise("business")
-        call.enqueue(object : Callback<NewsResponseBean> {
-            override fun onResponse(
-                call: Call<NewsResponseBean>,
-                response: Response<NewsResponseBean>
-            ) {
-                addData(response.body()!!)
-            }
-
-            override fun onFailure(call: Call<NewsResponseBean>, t: Throwable) {
-
-            }
-
-        })
-    }
-
-    fun getScienceNews(){
-
-        val call = Utilities.create().initWebServiceCall(BuildConfig.BASE_URL).getNewsCategoryWise("science")
-        call.enqueue(object : Callback<NewsResponseBean> {
-            override fun onResponse(
-                call: Call<NewsResponseBean>,
-                response: Response<NewsResponseBean>
-            ) {
-                addData(response.body()!!)
-            }
-
-            override fun onFailure(call: Call<NewsResponseBean>, t: Throwable) {
-
-            }
-
-        })
-    }
-
-    fun getHealthNews(){
-
-        val call = Utilities.create().initWebServiceCall(BuildConfig.BASE_URL).getNewsCategoryWise("health")
+        val call = Utilities.create().initWebServiceCall(BuildConfig.BASE_URL).getNewsCategoryWise(category)
         call.enqueue(object : Callback<NewsResponseBean> {
             override fun onResponse(
                 call: Call<NewsResponseBean>,
