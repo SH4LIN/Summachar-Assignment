@@ -10,4 +10,5 @@
     <string name="business">BUSINESS</string>
     <string name="science">SCIENCE</string>
     <string name="health">HEALTH</string>
+    <string name="please_check_your_internet_connection">Please Check Your Internet Connection</string>
 </resources>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
@@ -18,8 +18,8 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_marginEnd="12sp"
+            android:layout_centerInParent="true"
             android:text="@string/clickToSeeNewPost"
             app:icon="@drawable/ic_baseline_refresh_24" />
 
@@ -47,6 +47,20 @@
         android:progressBackgroundTint="@color/primary_color_variant"
         android:visibility="gone"
         />
+
+    <TextView
+        android:id="@+id/internetConnectionError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_color"
+        android:textStyle="bold"
+        android:text="@string/please_check_your_internet_connection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

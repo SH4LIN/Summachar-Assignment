@@ -49,7 +49,7 @@ class NewsResponseBean: Serializable {
 
         @SerializedName("publishedAt")
         @Expose
-        var publishedAt: Timestamp? = null
+        lateinit var publishedAt: Timestamp
 
         @SerializedName("content")
         @Expose

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ class TopStoriesFragment: Fragment(), View.OnClickListener {
     private lateinit var newsRecyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var  newsRecyclerAdapter: NewsRecyclerAdapter
+    private lateinit var  internetConnectionError: TextView
     private var newsData: NewsResponseBean = NewsResponseBean()
     private var flag:Boolean = false
     private val model: TopStoriesFragmentViewModel by viewModels()
@@ -47,12 +49,15 @@ class TopStoriesFragment: Fragment(), View.OnClickListener {
         title = arguments?.getString("title").toString()
         model.getDataObserver().observe(this, {
             if(it != null){
+                internetConnectionError.visibility = View.GONE
                 this.flag = true
                 this.newsData = it
                 newsRecyclerAdapter.setData(it)
                 progressBar.visibility = View.GONE
                 materialButtonRelativeLayout.visibility = View.VISIBLE
                 scrollToPosition(0)
+            }else{
+                internetConnectionError.visibility = View.VISIBLE
             }
         })
     }
@@ -87,6 +92,7 @@ class TopStoriesFragment: Fragment(), View.OnClickListener {
         buttonMorePost = view.findViewById(R.id.buttonMorePost)
         newsRecyclerView = view.findViewById(R.id.newsRecyclerView)
         progressBar = view.findViewById(R.id.progressBar)
+        internetConnectionError = view.findViewById(R.id.internetConnectionError)
     }
 
     override fun onResume() {
