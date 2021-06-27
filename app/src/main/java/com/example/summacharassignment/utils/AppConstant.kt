@@ -20,4 +20,8 @@ class AppConstant private constructor(){
             }
     }
     var map: MutableMap<String, NewsResponseBean?> = mutableMapOf()
+
+    fun addData(title:String,data:NewsResponseBean){
+        map[title] = data
+    }
 }

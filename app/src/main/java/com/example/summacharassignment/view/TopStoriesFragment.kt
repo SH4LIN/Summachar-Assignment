@@ -21,7 +21,7 @@ import com.example.summacharassignment.utils.TabItemsModel
 import retrofit2.Response
 
 class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
-    private var title: String? = null
+    private var title: String = ""
     private var page = 0
     lateinit var materialButtonRelativeLayout: RelativeLayout
     lateinit var buttonMorePost: Button
@@ -47,7 +47,7 @@ class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         page = arguments?.getInt("id", 0)!!;
-        title = arguments?.getString("title");
+        title = arguments?.getString("title").toString();
     }
 
 
@@ -99,11 +99,13 @@ class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
     override fun onApiSuccess(response: Response<NewsResponseBean>) {
         progressBar.visibility = View.GONE
         materialButtonRelativeLayout.visibility = View.VISIBLE
-        val map = AppConstant.instance!!.map
-        map["$title"] = response.body()
-        AppConstant.instance?.map = map
+        AppConstant.instance?.addData(title, response.body()!!)
         newsRecyclerAdapter.notifyDataSetChanged()
-        newsRecyclerView.layoutManager?.scrollToPosition(0)
+        scrollToPosition(0)
+    }
+
+    private fun scrollToPosition(position:Int){
+        newsRecyclerView.smoothScrollToPosition(position)
     }
 
     override fun onApiFailure(t: Throwable) {
