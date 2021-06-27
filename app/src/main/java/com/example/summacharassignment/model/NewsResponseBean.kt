@@ -31,7 +31,7 @@ class NewsResponseBean: Serializable {
 
     @SerializedName("articles")
     @Expose
-    var articles: List<Articles> = mutableListOf()
+    var articles: MutableList<Articles> = mutableListOf()
         get() {
             return field
         }

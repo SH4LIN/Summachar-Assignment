@@ -1,4 +1,4 @@
-package com.example.summacharassignment.interfc
+package com.example.summacharassignment.network
 
 import com.example.summacharassignment.model.NewsResponseBean
 import retrofit2.Response

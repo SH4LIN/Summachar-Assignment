@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.view.WindowManager
 import com.example.summacharassignment.BuildConfig
-import com.example.summacharassignment.interfc.RetrofitInterface
+import com.example.summacharassignment.network.RetrofitInterface
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,7 +25,7 @@ class Utilities {
         }
     }
 
-    fun initWebServiceCall(path:String):RetrofitInterface{
+    fun initWebServiceCall(path:String): RetrofitInterface {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = getOkHttpBuilderWithTlsSupport()

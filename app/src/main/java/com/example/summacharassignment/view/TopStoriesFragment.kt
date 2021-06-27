@@ -9,27 +9,29 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.summacharassignment.R
 import com.example.summacharassignment.adapter.NewsRecyclerAdapter
-import com.example.summacharassignment.interfc.ApiResponseHandler
+import com.example.summacharassignment.network.ApiResponseHandler
 import com.example.summacharassignment.model.NewsResponseBean
-import com.example.summacharassignment.presenter.GetNewsPresenter
 import com.example.summacharassignment.utils.AppConstant
-import com.example.summacharassignment.utils.TabItemsModel
+import com.example.summacharassignment.viewmodel.TopStoriesFragmentViewModel
 import retrofit2.Response
 
-class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
+class TopStoriesFragment: Fragment(), ApiResponseHandler, View.OnClickListener {
     private var title: String = ""
     private var page = 0
     lateinit var materialButtonRelativeLayout: RelativeLayout
     lateinit var buttonMorePost: Button
     lateinit var newsRecyclerView: RecyclerView
     lateinit var progressBar: ProgressBar
-    var flag: Boolean = false
-    var getNewsPresenter = GetNewsPresenter()
     lateinit var  newsRecyclerAdapter: NewsRecyclerAdapter
+    var newsData: NewsResponseBean = NewsResponseBean()
+    var flag:Boolean = false
+    private val model: TopStoriesFragmentViewModel by viewModels()
 
     companion object{
         fun newInstance(id:Int,title:String): TopStoriesFragment{
@@ -46,8 +48,17 @@ class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        page = arguments?.getInt("id", 0)!!;
-        title = arguments?.getString("title").toString();
+        page = arguments?.getInt("id", 0)!!
+        title = arguments?.getString("title").toString()
+        model.getDataObserver().observe(this, {
+            if(it != null){
+                this.flag = true
+                this.newsData = it
+                newsRecyclerAdapter.setData(it)
+                progressBar.visibility = View.GONE
+                materialButtonRelativeLayout.visibility = View.VISIBLE
+            }
+        })
     }
 
 
@@ -64,7 +75,7 @@ class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
 
         newsRecyclerView = view.findViewById(R.id.newsRecyclerView)
         newsRecyclerView.layoutManager = LinearLayoutManager(this.context)
-        newsRecyclerAdapter = NewsRecyclerAdapter(title)
+        newsRecyclerAdapter = NewsRecyclerAdapter(this.context,newsData)
         newsRecyclerView.adapter = newsRecyclerAdapter
 
         progressBar = view.findViewById(R.id.progressBar)
@@ -73,34 +84,19 @@ class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        callApi()
-        Log.d("Fragment Title", title.toString())
-    }
-
-    fun callApi(){
         if(!this.flag){
             progressBar.visibility = View.VISIBLE
             materialButtonRelativeLayout.visibility = View.GONE
-            when(page){
-                TabItemsModel.TOPSTORIES.id -> this.getNewsPresenter.getTopHeadlines(this)
-
-                TabItemsModel.SPORTS.id -> this.getNewsPresenter.getSportsNews(this)
-
-                TabItemsModel.BUSINESS.id -> this.getNewsPresenter.getBusinessNews(this)
-
-                TabItemsModel.SCIENCE.id -> this.getNewsPresenter.getScienceNews(this)
-
-                TabItemsModel.HEALTH.id -> this.getNewsPresenter.getHealthNews(this)
-            }
-            flag = true
+            model.callApi(page)
         }
     }
 
+
     override fun onApiSuccess(response: Response<NewsResponseBean>) {
-        progressBar.visibility = View.GONE
-        materialButtonRelativeLayout.visibility = View.VISIBLE
         AppConstant.instance?.addData(title, response.body()!!)
         newsRecyclerAdapter.notifyDataSetChanged()
+        progressBar.visibility = View.GONE
+        materialButtonRelativeLayout.visibility = View.VISIBLE
         scrollToPosition(0)
     }
 
@@ -118,8 +114,9 @@ class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
         if (v != null) {
             when(v.id){
                 buttonMorePost.id -> {
-                    this.flag = false
-                    callApi()
+                    progressBar.visibility = View.VISIBLE
+                    materialButtonRelativeLayout.visibility = View.GONE
+                    model.callApi(page)
                 }
             }
         }
