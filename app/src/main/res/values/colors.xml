@@ -10,4 +10,5 @@
     <color name="primary_color">#182243</color>
     <color name="primary_color_variant">#9F182243</color>
     <color name="textColorYellow">#FFE500</color>
+    <color name="colorGrey">#dddddd</color>
 </resources>

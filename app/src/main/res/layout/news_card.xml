@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="12sp"
-    android:layout_marginTop="18sp"
+    android:paddingVertical="8sp"
     >
 
     <LinearLayout
@@ -38,6 +38,7 @@
                 android:layout_marginStart="8sp"
                 android:text="@string/dummy_text"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/primary_color"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/imgClock"/>
@@ -78,9 +79,10 @@
         android:id="@+id/materialCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
-        app:cardCornerRadius="12sp"
+        android:layout_marginTop="8sp"
+        app:cardCornerRadius="20sp"
         app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
@@ -90,6 +92,7 @@
             android:layout_height="250sp"
             android:id="@+id/viewPagerMultiImage"
             />
+
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -101,7 +104,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:weightSum="7"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="8sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView">
@@ -113,29 +116,39 @@
             android:layout_weight="3"
             android:weightSum="3">
 
-            <ImageView
-                android:id="@+id/imgLike"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/clock"
-                android:src="@drawable/ic_baseline_favorite_border_24" />
-
-            <ImageView
-                android:id="@+id/imgComment"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/imgLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/clock"
+                    android:src="@drawable/ic_baseline_favorite_border_24" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/clock"
-                android:src="@drawable/ic_outline_mode_comment_24" />
-
-            <ImageView
-                android:id="@+id/imgBookmark"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/imgComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/clock"
+                    android:src="@drawable/ic_outline_mode_comment_24" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="@string/clock"
-                android:src="@drawable/ic_outline_bookmark_border_24" />
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/imgBookmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/clock"
+                    android:src="@drawable/ic_outline_bookmark_border_24" />
+            </LinearLayout>
 
 
         </LinearLayout>

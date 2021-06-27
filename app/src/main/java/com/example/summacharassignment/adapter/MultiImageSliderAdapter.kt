@@ -1,6 +1,7 @@
 package com.example.summacharassignment.adapter
 
 import android.net.Uri
+import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.summacharassignment.R
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
@@ -17,8 +19,6 @@ class MultiImageSliderAdapter(image:String?): RecyclerView.Adapter<MultiImageSli
     init {
         if(image != null){
             imagesList = image.split(";")
-            Log.d("Image List Size: ", imagesList!!.size.toString())
-            Log.d("Image List: ", imagesList.toString())
         }else{
             flag = true
             imagesList = null
@@ -35,36 +35,24 @@ class MultiImageSliderAdapter(image:String?): RecyclerView.Adapter<MultiImageSli
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.shimmerFrameLayout.startShimmer()
+
         if(flag){
-            Picasso.get().load(R.drawable.dummynewsimage).into(holder.imgNews,object: Callback{
-                override fun onSuccess() {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onError(e: java.lang.Exception?) {
-                    TODO("Not yet implemented")
-                }
-
-            })
+            Picasso.get().load(R.drawable.dummynewsimage).into(holder.imgNews)
+            holder.shimmerFrameLayout.stopShimmer()
+            holder.shimmerFrameLayout.visibility = View.GONE
         }else {
             val uri = Uri.parse(imagesList!![position])
             Picasso.get().load(uri).into(holder.imgNews, object : Callback {
                 override fun onSuccess() {
-                    Log.d("Image Loading", "Success")
+                    holder.shimmerFrameLayout.stopShimmer()
+                    holder.shimmerFrameLayout.visibility = View.GONE
                 }
 
                 override fun onError(e: Exception?) {
-                    Log.d("Image Loading", "Failed")
-                    Picasso.get().load(R.drawable.dummynewsimage).into(holder.imgNews,object: Callback{
-                        override fun onSuccess() {
-                            TODO("Not yet implemented")
-                        }
-
-                        override fun onError(e: java.lang.Exception?) {
-                            TODO("Not yet implemented")
-                        }
-
-                    })
+                    Picasso.get().load(R.drawable.dummynewsimage).into(holder.imgNews)
+                    holder.shimmerFrameLayout.stopShimmer()
+                    holder.shimmerFrameLayout.visibility = View.GONE
                 }
 
             })
@@ -78,5 +66,6 @@ class MultiImageSliderAdapter(image:String?): RecyclerView.Adapter<MultiImageSli
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgNews: ImageView = itemView.findViewById(R.id.imgNews)
+        val shimmerFrameLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmerFrameLayout)
     }
 }

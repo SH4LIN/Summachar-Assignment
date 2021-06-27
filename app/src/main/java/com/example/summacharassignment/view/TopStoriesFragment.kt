@@ -103,6 +103,7 @@ class TopStoriesFragment: Fragment(),ApiResponseHandler, View.OnClickListener {
         map["$title"] = response.body()
         AppConstant.instance?.map = map
         newsRecyclerAdapter.notifyDataSetChanged()
+        newsRecyclerView.layoutManager?.scrollToPosition(0)
     }
 
     override fun onApiFailure(t: Throwable) {
