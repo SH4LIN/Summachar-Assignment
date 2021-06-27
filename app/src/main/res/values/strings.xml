@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Summachar Assignment</string>
+    <string name="clickToSeeNewPost">Click to See new posts</string>
+    <string name="dummy_text">dummy Text</string>
+    <string name="share">Share</string>
+    <string name="clock">Clock</string>
+    <string name="read_more">Read More</string>
+    <string name="top_headlines">TOP STORIES</string>
+    <string name="sports">SPORTS</string>
+    <string name="business">BUSINESS</string>
+    <string name="science">SCIENCE</string>
+    <string name="health">HEALTH</string>
+</resources>
