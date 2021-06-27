@@ -6,13 +6,13 @@ class CustomScrollListener: RecyclerView.OnScrollListener() {
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         when {
             dy > 0 -> {
-                System.out.println("Scrolled Downwards");
+                System.out.println("Scrolled Downwards")
             }
             dy < 0 -> {
-                System.out.println("Scrolled Upwards");
+                System.out.println("Scrolled Upwards")
             }
             else -> {
-                System.out.println("No Vertical Scrolled");
+                System.out.println("No Vertical Scrolled")
             }
         }
     }

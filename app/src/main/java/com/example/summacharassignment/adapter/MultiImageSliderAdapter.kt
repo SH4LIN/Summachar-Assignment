@@ -1,8 +1,6 @@
 package com.example.summacharassignment.adapter
 
 import android.net.Uri
-import android.opengl.Visibility
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

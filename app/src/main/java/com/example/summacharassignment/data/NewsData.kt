@@ -13,5 +13,4 @@ data class NewsData(
     val content: String,
     val sourceId: String,
     val sourceName: String
-) {
-}
+)

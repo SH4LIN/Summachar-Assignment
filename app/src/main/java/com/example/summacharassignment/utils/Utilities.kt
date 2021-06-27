@@ -27,7 +27,7 @@ class Utilities {
 
     fun initWebServiceCall(path:String): RetrofitInterface {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = getOkHttpBuilderWithTlsSupport()
         client!!.readTimeout(1, TimeUnit.MINUTES)
         client.connectTimeout(1, TimeUnit.MINUTES)

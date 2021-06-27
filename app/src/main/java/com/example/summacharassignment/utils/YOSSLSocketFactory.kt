@@ -7,7 +7,7 @@ import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import javax.net.ssl.*
 
-class YOSSLSocketFactory() : SSLSocketFactory() {
+class YOSSLSocketFactory : SSLSocketFactory() {
     private val kmf: KeyManagerFactory? = null
     private var socketFactory: SSLSocketFactory? = null
 

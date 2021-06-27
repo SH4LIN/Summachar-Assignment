@@ -1,7 +1,5 @@
 package com.example.summacharassignment.utils
 
-import com.example.summacharassignment.model.NewsResponseBean
-
 class AppConstant private constructor(){
     companion object{
         private var INSTANCE: AppConstant? = null
@@ -18,10 +16,5 @@ class AppConstant private constructor(){
                 }
                 return INSTANCE
             }
-    }
-    var map: MutableMap<String, NewsResponseBean?> = mutableMapOf()
-
-    fun addData(title:String,data:NewsResponseBean){
-        map[title] = data
     }
 }

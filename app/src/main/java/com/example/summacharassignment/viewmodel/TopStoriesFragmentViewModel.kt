@@ -1,8 +1,8 @@
 package com.example.summacharassignment.viewmodel
 
-import android.util.Log
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.summacharassignment.BuildConfig
 import com.example.summacharassignment.model.NewsResponseBean
 import com.example.summacharassignment.utils.TabItemsModel
@@ -11,9 +11,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TopStoriesFragmentViewModel: ViewModel() {
+class TopStoriesFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
-    val data = MutableLiveData<NewsResponseBean>()
+    private val data = MutableLiveData<NewsResponseBean>()
 
 
     fun getDataObserver(): MutableLiveData<NewsResponseBean> {
