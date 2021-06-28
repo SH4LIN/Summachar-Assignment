@@ -1,6 +1,7 @@
 package com.example.summacharassignment.data
 
 import androidx.lifecycle.LiveData
+import java.sql.Timestamp
 
 class NewsDataRepository(private val newsDataDao: NewsDataDao) {
 
@@ -16,5 +17,13 @@ class NewsDataRepository(private val newsDataDao: NewsDataDao) {
 
     fun deleteAllDataOfPageId(pageId:Int): Int{
         return newsDataDao.deleteAllDataOfPageId(pageId)
+    }
+
+    fun isRowExist(pageId: Int,title:String,url: String,publishedAt:Timestamp): Boolean{
+        return newsDataDao.isRowExist(pageId,title,url,publishedAt)
+    }
+
+    fun checkDataExistForTag(pageId: Int): Int{
+        return checkDataExistForTag(pageId)
     }
 }

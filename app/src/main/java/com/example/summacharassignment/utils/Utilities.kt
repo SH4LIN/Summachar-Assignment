@@ -1,8 +1,11 @@
 package com.example.summacharassignment.utils
 
 import android.app.Activity
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Build
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import com.example.summacharassignment.BuildConfig
 import com.example.summacharassignment.network.RetrofitInterface
 import okhttp3.*
@@ -17,6 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLSession
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
+
 
 class Utilities {
     companion object{
@@ -94,6 +98,21 @@ class Utilities {
         }
         builder.hostnameVerifier { s: String?, sslSession: SSLSession? -> true }
         return builder
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun checkConnection(context:Context): Boolean{
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.activeNetwork != null
+    }
+
+    fun internetIsConnected(): Boolean {
+        return try {
+            val command = "ping -c 1 google.com"
+            Runtime.getRuntime().exec(command).waitFor() == 0
+        } catch (e: Exception) {
+            false
+        }
     }
 
 
