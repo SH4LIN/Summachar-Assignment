@@ -122,7 +122,7 @@ class TopStoriesFragmentViewModel(application: Application) : AndroidViewModel(a
                     withContext(Dispatchers.Main){
                         val toast = Toast.makeText(
                             getApplication(),
-                            "Could Not Refresh The News\nPlease Check Your Internet Connection",
+                            "Could Not Refresh The Feed\nPlease Check Your Internet Connection",
                             Toast.LENGTH_LONG
                         )
                         toast.setGravity(Gravity.CENTER, 0, 0)

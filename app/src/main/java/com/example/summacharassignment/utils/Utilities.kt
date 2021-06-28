@@ -1,13 +1,10 @@
 package com.example.summacharassignment.utils
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
-import android.view.Gravity
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.summacharassignment.BuildConfig
 import com.example.summacharassignment.network.RetrofitInterface
@@ -18,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.security.KeyStore
 import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLSession
 import javax.net.ssl.TrustManagerFactory
@@ -36,15 +32,15 @@ class Utilities {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val client = getOkHttpBuilderWithTlsSupport()
-        client!!.readTimeout(1, TimeUnit.MINUTES)
+        client.readTimeout(1, TimeUnit.MINUTES)
         client.connectTimeout(1, TimeUnit.MINUTES)
         client.writeTimeout(1, TimeUnit.MINUTES)
         client.addInterceptor(httpLoggingInterceptor)
-        client.addInterceptor(Interceptor { chain: Interceptor.Chain ->
+        client.addInterceptor { chain: Interceptor.Chain ->
             val request =
                 chain.request().newBuilder().header("X-Api-Key", BuildConfig.X_API_KEY).build()
             chain.proceed(request)
-        })
+        }
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(path)
             .client(client.build())
@@ -64,7 +60,7 @@ class Utilities {
     }
 
 
-    private fun getOkHttpBuilderWithTlsSupport(): OkHttpClient.Builder? {
+    private fun getOkHttpBuilderWithTlsSupport(): OkHttpClient.Builder {
         val builder = OkHttpClient.Builder()
         //tls 1.2
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -95,11 +91,11 @@ class Utilities {
                 )
                 .allEnabledCipherSuites()
                 .build()
-            builder.connectionSpecs(Arrays.asList(ConnectionSpec.CLEARTEXT, spec))
+            builder.connectionSpecs(listOf(ConnectionSpec.CLEARTEXT, spec))
         } else {
             builder.sslSocketFactory(YOSSLSocketFactory(), resolveDefaultTrustManager())
         }
-        builder.hostnameVerifier { s: String?, sslSession: SSLSession? -> true }
+        builder.hostnameVerifier { _: String?, _: SSLSession? -> true }
         return builder
     }
 
