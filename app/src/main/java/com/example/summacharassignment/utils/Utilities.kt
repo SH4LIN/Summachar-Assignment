@@ -1,10 +1,13 @@
 package com.example.summacharassignment.utils
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
+import android.view.Gravity
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.summacharassignment.BuildConfig
 import com.example.summacharassignment.network.RetrofitInterface
@@ -114,6 +117,7 @@ class Utilities {
             false
         }
     }
+
 
 
     private fun resolveDefaultTrustManager(): X509TrustManager? {

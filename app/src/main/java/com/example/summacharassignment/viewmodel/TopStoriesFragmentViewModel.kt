@@ -2,6 +2,7 @@ package com.example.summacharassignment.viewmodel
 
 import android.app.Application
 import android.os.Build
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.widget.Toast
@@ -18,6 +19,7 @@ import com.example.summacharassignment.utils.TabItemsModel
 import com.example.summacharassignment.utils.Utilities
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -117,26 +119,33 @@ class TopStoriesFragmentViewModel(application: Application) : AndroidViewModel(a
                 } else {
                     /*Log.d(TAG,"Data Added From Only DB")*/
                     getDataFromDB(page)
-                    val toast = Toast.makeText(
-                        getApplication(),
-                        "Could Not Refresh The News\nPlease Check Your Internet Connection",
-                        Toast.LENGTH_LONG
-                    )
-                    toast.setGravity(Gravity.CENTER, 0, 0)
-                    toast.show()
+                    withContext(Dispatchers.Main){
+                        val toast = Toast.makeText(
+                            getApplication(),
+                            "Could Not Refresh The News\nPlease Check Your Internet Connection",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                    }
+
+
                 }
             }else{
                 if (Utilities.create().checkConnection(getApplication())) {
                     /*Log.d(TAG,"Data Added From Only API")*/
                     callApi(page)
                 }else{
-                    val toast = Toast.makeText(
-                        getApplication(),
-                        "Please Check Your Internet Connection",
-                        Toast.LENGTH_LONG
-                    )
-                    toast.setGravity(Gravity.CENTER, 0, 0)
-                    toast.show()
+                    data.postValue(NewsResponseBean())
+                    withContext(Dispatchers.Main){
+                        val toast = Toast.makeText(
+                            getApplication(),
+                            "Please Check Your Internet Connection",
+                            Toast.LENGTH_LONG
+                        )
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                    }
                 }
             }
         }
