@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        val tabLayout2 = findViewById<TabLayout>(R.id.tabLayout2)
         val view_pager_screen = findViewById<ViewPager2>(R.id.view_pager_screen)
         view_pager_screen.offscreenPageLimit = 5
         view_pager_screen.isUserInputEnabled = false

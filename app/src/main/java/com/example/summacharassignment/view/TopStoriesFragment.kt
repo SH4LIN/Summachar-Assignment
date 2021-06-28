@@ -1,5 +1,6 @@
 package com.example.summacharassignment.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,7 +51,6 @@ class TopStoriesFragment: Fragment(), View.OnClickListener {
         title = arguments?.getString("title").toString()
         model.getDataObserver().observe(this, {
             if(it != null){
-                internetConnectionError.visibility = View.GONE
                 this.flag = true
                 this.newsData = it
                 newsRecyclerAdapter.setData(it)
@@ -81,6 +82,7 @@ class TopStoriesFragment: Fragment(), View.OnClickListener {
         newsRecyclerView.layoutManager = LinearLayoutManager(this.context)
         newsRecyclerAdapter = NewsRecyclerAdapter(this.context,newsData)
         newsRecyclerView.adapter = newsRecyclerAdapter
+        /*newsRecyclerView.addOnScrollListener(this)*/
     }
 
     private fun setListener(){
@@ -95,12 +97,13 @@ class TopStoriesFragment: Fragment(), View.OnClickListener {
         internetConnectionError = view.findViewById(R.id.internetConnectionError)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onResume() {
         super.onResume()
         if(!this.flag){
             progressBar.visibility = View.VISIBLE
             materialButtonRelativeLayout.visibility = View.GONE
-            model.callApi(page)
+            model.checkData(page,false)
         }
     }
 
@@ -109,13 +112,14 @@ class TopStoriesFragment: Fragment(), View.OnClickListener {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onClick(v: View?) {
         if (v != null) {
             when(v.id){
                 buttonMorePost.id -> {
                     progressBar.visibility = View.VISIBLE
                     materialButtonRelativeLayout.visibility = View.GONE
-                    model.callApi(page)
+                    model.checkData(page,true)
                 }
             }
         }

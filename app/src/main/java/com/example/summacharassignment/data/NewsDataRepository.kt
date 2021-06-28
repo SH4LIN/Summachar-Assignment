@@ -24,6 +24,6 @@ class NewsDataRepository(private val newsDataDao: NewsDataDao) {
     }
 
     fun checkDataExistForTag(pageId: Int): Int{
-        return checkDataExistForTag(pageId)
+        return newsDataDao.checkDataExistForTag(pageId)
     }
 }

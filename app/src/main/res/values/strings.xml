@@ -11,4 +11,5 @@
     <string name="science">SCIENCE</string>
     <string name="health">HEALTH</string>
     <string name="please_check_your_internet_connection">Please Check Your Internet Connection</string>
+    <string name="go_to_top">Go To Top</string>
 </resources>
